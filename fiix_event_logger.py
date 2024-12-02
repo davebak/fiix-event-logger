@@ -25,8 +25,9 @@ def get_config_data(config_file):
 
     event_id = config.get('Data', 'event_id')
     asset_id = config.get('Data', 'asset_id')
+    description = config.get('Data', 'description')
 
-    return tenant_url, app_key, access_key, api_secret, event_id, asset_id
+    return tenant_url, app_key, access_key, api_secret, event_id, asset_id, description
 
 
 def prepare_msg_header(secret, msg):
@@ -45,7 +46,7 @@ def prepare_msg_header(secret, msg):
     return headers
 
 
-def prepare_msg_body(event_id, asset_id):
+def prepare_msg_body(event_id, asset_id, description):
     # Set up the message body
     body = {
         "_maCn": "AddRequest",
@@ -56,7 +57,6 @@ def prepare_msg_body(event_id, asset_id):
         },
         "className": "AssetEvent",
         "object": {
-            "strAdditionalDescription": "Tech opened safety gate, machine stopped",
             "className": "AssetEvent"
         },
         "fields": "*"
@@ -64,6 +64,7 @@ def prepare_msg_body(event_id, asset_id):
 
     body["object"]["intAssetEventTypeID"] = str(event_id)
     body["object"]["intAssetID"] = str(asset_id)
+    body["object"]["strAdditionalDescription"] = description
     body["object"]["dtmDateSubmitted"] = str(
         int(datetime.now(timezone.utc).timestamp() * 1000)
     )
@@ -73,7 +74,7 @@ def prepare_msg_body(event_id, asset_id):
 if __name__ == '__main__':
     # Get config data
     tenant_url, app_key, access_key,\
-          api_secret, event_id, asset_id = get_config_data("event_logger.ini")
+          api_secret, event_id, asset_id, description = get_config_data("event_logger.ini")
 
     # Set-up the request url
     request_url = (f"https://{tenant_url}.macmms.com/api/?service=cmms"
@@ -84,9 +85,14 @@ if __name__ == '__main__':
 
     # Prepare the request 
     headers = prepare_msg_header(api_secret, request_url.replace("https://", ""))
-    body = prepare_msg_body(event_id, asset_id)
+    body = prepare_msg_body(event_id, asset_id, description)
+
+
+    print(headers)
+    print(body)
+    print(request_url)
 
     # Send the request
-    response = requests.post(request_url, json=body, headers=headers)
-    print(f"\nResponse status: {response.status_code}\n")
-    print(f"\nData: {response.text}\n")
+    # response = requests.post(request_url, json=body, headers=headers)
+    # print(f"\nResponse status: {response.status_code}\n")
+    # print(f"\nData: {response.text}\n")
