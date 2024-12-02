@@ -87,12 +87,7 @@ if __name__ == '__main__':
     headers = prepare_msg_header(api_secret, request_url.replace("https://", ""))
     body = prepare_msg_body(event_id, asset_id, description)
 
-
-    print(headers)
-    print(body)
-    print(request_url)
-
     # Send the request
-    # response = requests.post(request_url, json=body, headers=headers)
-    # print(f"\nResponse status: {response.status_code}\n")
-    # print(f"\nData: {response.text}\n")
+    response = requests.post(request_url, json=body, headers=headers)
+    print(f"\nResponse status: {response.status_code}\n")
+    print(f"\nData: {response.text}\n")
