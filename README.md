@@ -31,3 +31,9 @@ for information about retrieving your Fiix API keys.
 
 Ensure that you don't commit Fiix API keys to a git repository when updating 
 the `.ini` file. 
+
+## Supported Platforms
+
+Unfortunately, the standalone `.exe` for this script is only for Windows x86-64, 
+however you can just `git clone` the script and run it providing you have Python
+installed on your machine.
