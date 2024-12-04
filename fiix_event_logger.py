@@ -77,17 +77,17 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
                     prog='fiix_event_logger',
                     description='Log an event against an asset in Fiix CMMS')
-    
-    parser.add_argument('-c', '--config', 
+
+    parser.add_argument('-c', '--config',
                         help="the name of the config file",
                         default="event_logger.ini")
-    
+
     # Grab the config filename
     config_file = vars(parser.parse_args())["config"]
 
     # Get config data
     tenant_url, app_key, access_key,\
-          api_secret, event_id, asset_id, description = get_config_data(config_file)
+        api_secret, event_id, asset_id, description = get_config_data(config_file)
 
     # Set-up the request url
     request_url = (f"https://{tenant_url}.macmms.com/api/?service=cmms"
@@ -96,7 +96,7 @@ if __name__ == '__main__':
                    "&signatureMethod=HmacSHA256"
                    "&signatureVersion=1")
 
-    # Prepare the request 
+    # Prepare the request
     headers = prepare_msg_header(api_secret, request_url.replace("https://", ""))
     body = prepare_msg_body(event_id, asset_id, description)
 
