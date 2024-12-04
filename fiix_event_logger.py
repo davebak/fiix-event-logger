@@ -9,6 +9,7 @@ import hmac
 import requests
 import hashlib
 import configparser
+import argparse
 from datetime import datetime, timezone
 
 
@@ -72,9 +73,21 @@ def prepare_msg_body(event_id, asset_id, description):
     return body
 
 if __name__ == '__main__':
+    # Parse command line args (default to event_logger.ini)
+    parser = argparse.ArgumentParser(
+                    prog='fiix_event_logger',
+                    description='Log an event against an asset in Fiix CMMS')
+    
+    parser.add_argument('-c', '--config', 
+                        help="the name of the config file",
+                        default="event_logger.ini")
+    
+    # Grab the config filename
+    config_file = vars(parser.parse_args())["config"]
+
     # Get config data
     tenant_url, app_key, access_key,\
-          api_secret, event_id, asset_id, description = get_config_data("event_logger.ini")
+          api_secret, event_id, asset_id, description = get_config_data(config_file)
 
     # Set-up the request url
     request_url = (f"https://{tenant_url}.macmms.com/api/?service=cmms"
