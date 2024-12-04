@@ -101,6 +101,9 @@ if __name__ == '__main__':
     body = prepare_msg_body(event_id, asset_id, description)
 
     # Send the request
-    response = requests.post(request_url, json=body, headers=headers)
-    print(f"\nResponse status: {response.status_code}\n")
-    print(f"\nData: {response.text}\n")
+    try:
+        response = requests.post(request_url, json=body, headers=headers)
+        print(f"\nResponse status: {response.status_code}\n")
+        print(f"\nData: {response.text}\n")
+    except:
+        print("An error occured in sending the request.")
