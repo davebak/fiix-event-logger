@@ -5,7 +5,7 @@ This is a script to log an event in Fiix CMMS.
 The recommended way of running this tool is to download the latest executable 
 from the releases section and run
 
-```bat
+```sh
 # Run with default config file (event_logger.ini)
 C:\FiixFolder> fiix_event_logger.exe
 
