@@ -7,14 +7,14 @@ from the releases section and run
 
 ```sh
 # Run with default config file (event_logger.ini)
-C:\FiixFolder> fiix_event_logger.exe
+user@PC:~$ fiix_event_logger.exe
 
 # Run with user defined config file
-C:\FiixFolder> fiix_event_logger.exe --config my_config_file.ini
-C:\FiixFolder> fiix_event_logger.exe -c my_config_file.ini
+user@PC:~$ fiix_event_logger.exe --config my_config_file.ini
+user@PC:~$ fiix_event_logger.exe -c my_config_file.ini
 
 # Show help menu
-C:\FiixFolder> fiix_event_logger.exe -h
+user@PC:~$ fiix_event_logger.exe -h
 ```
 
 ## Editing the INI File
